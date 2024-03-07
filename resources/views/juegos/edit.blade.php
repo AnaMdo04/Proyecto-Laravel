@@ -30,7 +30,6 @@
             <label for="stock">Stock:</label>
             <input type="number" class="form-control" id="stock" name="stock" value="{{ $juego->stock }}" required>
         </div>
-
         <div class="form-group">
             <label for="idFabricante">Fabricante:</label>
             <select class="form-control" id="idFabricante" name="idFabricante">

@@ -50,14 +50,13 @@ class JuegoController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric',
             'edad_minima' => 'required|integer',
             'stock' => 'required|integer',
-            'idFabricante' => 'required|exists:fabricantes,id',
+            'idFabricante' => 'required|exists:fabricantes,idFabricante',
         ]);
 
         $juego = Juego::findOrFail($id);
