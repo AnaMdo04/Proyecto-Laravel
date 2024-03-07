@@ -33,12 +33,13 @@
         <div class="form-group">
             <label for="idFabricante">Fabricante:</label>
             <select class="form-control" id="idFabricante" name="idFabricante">
-                <option value="">Seleccione un Fabricante</option>
                 @foreach ($fabricantes as $fabricante)
-                <option value="{{ $fabricante->id }}">{{ $fabricante->nombre }}</option>
+                <option value="{{ $fabricante->idFabricante }}">{{ $fabricante->nombre }}</option>
                 @endforeach
             </select>
         </div>
+
+
 
         <button type="submit" class="btn btn-primary">Crear Juego</button>
     </form>

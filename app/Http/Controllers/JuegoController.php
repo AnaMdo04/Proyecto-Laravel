@@ -26,11 +26,20 @@ class JuegoController extends Controller
         return view('juegos.create', compact('fabricantes')); // Pasa los fabricantes a la vista
     }
 
-    // Almacena un nuevo juego en la base de datos.
     public function store(Request $request)
     {
-        Juego::create($request->all());
-        return redirect()->route('juegos.index');
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'precio' => 'required|numeric',
+            'edad_minima' => 'required|integer',
+            'stock' => 'required|integer',
+            'idFabricante' => 'required|exists:fabricantes,idFabricante',
+        ]);
+
+        $juego = Juego::create($validatedData);
+
+        return redirect()->route('juegos.index')->with('success', 'Juego actualizado correctamente');
     }
 
     // Muestra un juego específico.
