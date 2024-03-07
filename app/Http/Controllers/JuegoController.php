@@ -7,15 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\Juego;
 use App\Models\Fabricante; // Asegúrate de usar el modelo correcto para Juego
 use App\Models\Comentario; // Asegúrate de usar el modelo correcto para Comentario
+use App\Models\Puntuacion; // Asegúrate de usar el modelo correcto para Comentario
+
 
 class JuegoController extends Controller
 {
-    // Muestra un listado de juegos.
     public function index()
     {
         $juegos = Juego::paginate(10);
-        return view('juegos.index', compact('juegos'));
+        return view('index', compact('juegos')); // Cambia 'juegos.index' a 'index'
     }
+
+
 
     public function create()
     {
@@ -42,24 +45,42 @@ class JuegoController extends Controller
     {
         $juego = Juego::findOrFail($id);
         $fabricantes = Fabricante::all();
-        return view('juegos.edit', compact('juego'));
+        return view('juegos.edit', compact('juego', 'fabricantes'));
     }
 
-    // Actualiza un juego en la base de datos.
     public function update(Request $request, $id)
     {
+        dd($request->all());
+        $validatedData = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'precio' => 'required|numeric',
+            'edad_minima' => 'required|integer',
+            'stock' => 'required|integer',
+            'idFabricante' => 'required|exists:fabricantes,id',
+        ]);
+
         $juego = Juego::findOrFail($id);
-        $juego->update($request->all());
-        return redirect()->route('juegos.index');
+        $juego->update($validatedData);
+
+        return redirect()->route('juegos.index')->with('success', 'Juego actualizado correctamente');
     }
+
 
     // Elimina un juego de la base de datos.
     public function destroy($id)
     {
         $juego = Juego::findOrFail($id);
+
+        // Elimina todas las puntuaciones relacionadas con el juego
+        Puntuacion::where('idJuego', $id)->delete();
+
+        // Ahora puedes eliminar el juego de forma segura
         $juego->delete();
+
         return redirect()->route('juegos.index');
     }
+
 
     // Función adicional para cargar y mostrar comentarios relacionados con un juego.
     public function cargarComentarios($idJuego)

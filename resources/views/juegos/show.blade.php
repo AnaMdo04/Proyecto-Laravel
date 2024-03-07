@@ -13,6 +13,7 @@
         <p><strong>País del Fabricante:</strong> {{ $juego->fabricante->pais }}</p>
         @endif
     </div>
+    <a href="{{ route('juegos.comentarios', $juego->idJuego) }}" class="btn btn-primary">Ver Comentarios</a>
     <a href="{{ route('juegos.index') }}" class="btn btn-secondary">Volver al listado</a>
 </div>
 @endsection

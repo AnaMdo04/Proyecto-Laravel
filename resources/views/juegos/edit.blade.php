@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-4">
     <h1>Editar Juego: {{ $juego->nombre }}</h1>
-    <form method="POST" action="{{ route('juegos.update', $juego->id) }}">
+    <form method="POST" action="{{ route('juegos.update', $juego->idJuego) }}">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -35,10 +35,15 @@
             <label for="idFabricante">Fabricante:</label>
             <select class="form-control" id="idFabricante" name="idFabricante">
                 @foreach ($fabricantes as $fabricante)
-                <option value="{{ $fabricante->id }}" {{ $juego->idFabricante == $fabricante->id ? 'selected' : '' }}>{{ $fabricante->nombre }}</option>
+                <option value="{{ $fabricante->idFabricante }}" {{ ($juego->idFabricante == $fabricante->idFabricante) ? 'selected' : '' }}>
+                    {{ $fabricante->nombre }}
+                </option>
                 @endforeach
             </select>
+
+
         </div>
+
 
         <button type="submit" class="btn btn-primary">Actualizar</button>
         <a href="{{ route('juegos.index') }}" class="btn btn-secondary">Cancelar</a>

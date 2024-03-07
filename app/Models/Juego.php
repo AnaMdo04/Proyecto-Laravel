@@ -12,6 +12,7 @@ class Juego extends Model
 
     protected $table = 'juegos';
     protected $primaryKey = 'idJuego';
+
     protected $fillable = [
         'nombre',
         'descripcion',
