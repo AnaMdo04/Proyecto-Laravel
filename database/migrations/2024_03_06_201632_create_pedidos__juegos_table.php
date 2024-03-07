@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pedidos__juegos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::create('pedidos_juegos', function (Blueprint $table) {
+            $table->unsignedBigInteger('idPedido');
+            $table->unsignedBigInteger('idJuego');
+            $table->integer('cantidad');
+            $table->primary(['idPedido', 'idJuego']);
+            $table->foreign('idPedido')->references('idPedido')->on('pedidos')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('idJuego')->references('idJuego')->on('juegos')->onDelete('no action')->onUpdate('no action');
         });
     }
 

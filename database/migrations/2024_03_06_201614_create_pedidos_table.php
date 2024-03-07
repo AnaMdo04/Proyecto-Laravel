@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pedidos', function (Blueprint $table) {
-            $table->id();
+            $table->id('idPedido');
+            $table->timestamp('fecha_pedido')->nullable()->useCurrent();
+            $table->enum('estado', ['pendiente', 'enviado', 'entregado'])->nullable();
+            $table->unsignedBigInteger('id');
+            $table->foreign('id')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

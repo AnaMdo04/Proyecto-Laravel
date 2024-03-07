@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('juegos', function (Blueprint $table) {
-            $table->id();
+            $table->id('idJuego');
+            $table->string('nombre', 45)->nullable();
+            $table->text('descripcion')->nullable();
+            $table->integer('edad_minima')->nullable();
+            $table->decimal('precio', 10, 2)->nullable();
+            $table->integer('stock')->nullable();
+            $table->unsignedBigInteger('idFabricante');
+            $table->foreign('idFabricante')->references('idFabricante')->on('fabricantes')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }

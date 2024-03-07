@@ -1,23 +1,18 @@
 <?php
+// database/factories/CategoriaFactory.php
 
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categoria>
- */
 class CategoriaFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    public function definition()
     {
         return [
-            //
+            'nombre' => $this->faker->word,
+            'descripcion' => $this->faker->sentence,
+            'fecha_creacion' => $this->faker->dateTimeBetween('-2 years', 'now'),
         ];
     }
 }

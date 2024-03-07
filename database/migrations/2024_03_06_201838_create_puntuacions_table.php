@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('puntuacions', function (Blueprint $table) {
-            $table->id();
+        Schema::create('puntuaciones', function (Blueprint $table) {
+            $table->id('idPuntuacion');
+            $table->integer('puntuacion')->nullable();
+            $table->timestamp('fecha')->nullable()->useCurrent();
+            $table->unsignedBigInteger('id');
+            $table->unsignedBigInteger('idJuego');
+            $table->foreign('id')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('idJuego')->references('idJuego')->on('juegos')->onDelete('no action')->onUpdate('no action');
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('puntuacions');
+        Schema::dropIfExists('puntuaciones');
     }
 };

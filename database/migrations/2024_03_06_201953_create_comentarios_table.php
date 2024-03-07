@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('comentarios', function (Blueprint $table) {
-            $table->id();
+            $table->id('idComentario');
+            $table->text('contenido');
+            $table->dateTime('fecha');
+            $table->string('titulo');
+            $table->unsignedBigInteger('id');
+            $table->unsignedBigInteger('idJuego'); // Asegúrate de que esta línea esté presente
             $table->timestamps();
+
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idJuego')->references('idJuego')->on('juegos')->onDelete('cascade');
         });
     }
 

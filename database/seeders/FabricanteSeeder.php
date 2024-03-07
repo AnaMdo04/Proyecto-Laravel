@@ -1,17 +1,14 @@
 <?php
+// database/seeders/FabricanteSeeder.php
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FabricanteSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        //
+        \App\Models\Fabricante::factory(5)->create();
     }
 }
