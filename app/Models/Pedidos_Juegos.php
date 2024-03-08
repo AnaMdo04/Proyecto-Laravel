@@ -1,38 +1,44 @@
 <?php
-// app/Models/Puntuacion.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Puntuacion extends Model
+class Pedidos_Juegos extends Model
 {
     use HasFactory;
 
-    // Definición de la tabla correspondiente a este modelo
+    protected $table = 'pedidos_juegos'; // Nombre de la tabla en la base de datos
 
-    protected $table = 'puntuaciones';
+    /**
+     * Los atributos que son asignables en masa.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'idPedido',
+        'idJuego',
+        'cantidad'
+    ];
 
-    // Definición de la clave primaria de la tabla
-
-    protected $primaryKey = 'idPuntuacion';
-
-    // Definición de los campos que pueden ser llenados masivamente
-
-    protected $fillable = ['puntuacion', 'id', 'idJuego'];
-
-    // Relación "belongsTo" con el modelo User, indicando la clave foránea
-
-    public function user()
+    /**
+     * Define la relación con el modelo Pedido.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function pedido()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(Pedido::class, 'idPedido'); // Un pedido_juego pertenece a un pedido
     }
 
-    // Relación "belongsTo" con el modelo Juego, indicando la clave foránea
-
+    /**
+     * Define la relación con el modelo Juego.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function juego()
     {
-        return $this->belongsTo(Juego::class, 'idJuego');
+        return $this->belongsTo(Juego::class, 'idJuego'); // Un pedido_juego pertenece a un juego
     }
 }

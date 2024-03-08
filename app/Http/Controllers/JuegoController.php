@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Juego;
 use App\Models\Fabricante;
 use App\Models\Comentario;
+use App\Models\Pedidos_Juegos;
 use App\Models\Puntuacion;
 
 // Define el controlador para los juegos.
@@ -115,6 +116,8 @@ class JuegoController extends Controller
     {
         $juego = Juego::findOrFail($id); // Obtiene el juego a eliminar.
         Puntuacion::where('idJuego', $id)->delete(); // Elimina las puntuaciones asociadas al juego.
+        Pedidos_Juegos::where('idJuego', $id)->delete(); // Elimina las puntuaciones asociadas al juego.
+
         $juego->delete(); // Elimina el juego.
 
         return redirect()->route('juegos.index'); // Redirecciona al listado de juegos.
