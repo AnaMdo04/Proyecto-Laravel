@@ -11,6 +11,10 @@
         @if ($juego->fabricante) <!-- Asegúrate de que estás cargando la relación 'fabricante' en el controlador -->
         <p><strong>Fabricante:</strong> {{ $juego->fabricante->nombre }}</p>
         <p><strong>País del Fabricante:</strong> {{ $juego->fabricante->pais }}</p>
+        @foreach($juego->imagenes as $imagen)
+        <img src="{{ Storage::url($imagen->ruta_imagen) }}" alt="Imagen del juego">
+        @endforeach
+
         @endif
     </div>
     <a href="{{ route('juegos.comentarios', $juego->idJuego) }}" class="btn btn-primary">Ver Comentarios</a>

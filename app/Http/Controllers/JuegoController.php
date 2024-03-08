@@ -15,7 +15,7 @@ class JuegoController extends Controller
     public function index()
     {
         $juegos = Juego::paginate(10);
-        return view('index', compact('juegos')); // Cambia 'juegos.index' a 'index'
+        return view('juegos.index', compact('juegos')); // Cambia 'juegos.index' a 'index'
     }
 
 
@@ -35,11 +35,25 @@ class JuegoController extends Controller
             'edad_minima' => 'required|integer',
             'stock' => 'required|integer',
             'idFabricante' => 'required|exists:fabricantes,idFabricante',
+            'imagenes.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // Crea el juego sin las imágenes primero
         $juego = Juego::create($validatedData);
 
-        return redirect()->route('juegos.index')->with('success', 'Juego actualizado correctamente');
+        // Manejo de las imágenes
+        if ($request->hasFile('imagenes')) {
+            foreach ($request->file('imagenes') as $imagen) {
+                $rutaImagen = $imagen->store('imagenes', 'public');
+
+                // Suponiendo que tu modelo Juego tiene una relación imagenes() para esto
+                $juego->imagenes()->create([
+                    'ruta_imagen' => $rutaImagen,
+                ]);
+            }
+        }
+
+        return redirect()->route('juegos.index')->with('success', 'Juego creado correctamente');
     }
 
     // Muestra un juego específico.
@@ -66,13 +80,25 @@ class JuegoController extends Controller
             'edad_minima' => 'required|integer',
             'stock' => 'required|integer',
             'idFabricante' => 'required|exists:fabricantes,idFabricante',
+            'imagenes.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $juego = Juego::findOrFail($id);
         $juego->update($validatedData);
 
+        if ($request->hasFile('imagenes')) {
+            foreach ($request->file('imagenes') as $imagen) {
+                $rutaImagen = $imagen->store('imagenes', 'public');
+
+                $juego->imagenes()->create([
+                    'ruta_imagen' => $rutaImagen,
+                ]);
+            }
+        }
+
         return redirect()->route('juegos.index')->with('success', 'Juego actualizado correctamente');
     }
+
 
 
     // Elimina un juego de la base de datos.

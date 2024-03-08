@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-4">
     <h1>Editar Juego: {{ $juego->nombre }}</h1>
-    <form method="POST" action="{{ route('juegos.update', $juego->idJuego) }}">
+    <form method="POST" action="{{ route('juegos.update', $juego->idJuego) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -42,6 +42,7 @@
 
 
         </div>
+        <input type="file" name="imagenes[]" multiple>
 
 
         <button type="submit" class="btn btn-primary">Actualizar</button>

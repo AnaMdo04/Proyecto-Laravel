@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             EventoSeeder::class,
             PedidoSeeder::class,
             ComentarioSeeder::class,
-            PuntuacionSeeder::class, // Asegúrate de tener este seeder definido si estás trabajando con pedidos
+            PuntuacionSeeder::class,
+            ImagenesTableSeeder::class, // Asegúrate de tener este seeder definido si estás trabajando con pedidos
         ]);
     }
 }

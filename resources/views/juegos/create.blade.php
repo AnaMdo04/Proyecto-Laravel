@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-4">
     <h1>Añadir Nuevo Juego</h1>
-    <form method="POST" action="{{ route('juegos.store') }}">
+    <form method="POST" action="{{ route('juegos.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="nombre">Nombre:</label>
@@ -39,6 +39,7 @@
             </select>
         </div>
 
+        <input type="file" name="imagenes[]" multiple>
 
 
         <button type="submit" class="btn btn-primary">Crear Juego</button>

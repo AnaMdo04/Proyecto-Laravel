@@ -19,7 +19,8 @@ class Juego extends Model
         'edad_minima',
         'precio',
         'stock',
-        'idFabricante'
+        'idFabricante',
+        'ruta_imagen'
     ];
 
     public function fabricante()
@@ -41,5 +42,10 @@ class Juego extends Model
     public function categorias()
     {
         return $this->belongsToMany(Categoria::class, 'juegos_categorias', 'idJuego', 'idCategoria');
+    }
+
+    public function imagenes()
+    {
+        return $this->hasMany(Imagen::class, 'idJuego');
     }
 }
