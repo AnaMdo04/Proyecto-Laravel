@@ -3,12 +3,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // Importa el trait HasFactory
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Juego extends Model
 {
-    use HasFactory; // Utiliza el trait HasFactory dentro de la clase
+    use HasFactory;
 
     protected $table = 'juegos';
     protected $primaryKey = 'idJuego';
@@ -38,7 +38,6 @@ class Juego extends Model
         return $this->hasMany(Puntuacion::class, 'idJuego');
     }
 
-    // La relación con categorías a través de una tabla pivot no necesita un modelo dedicado.
     public function categorias()
     {
         return $this->belongsToMany(Categoria::class, 'juegos_categorias', 'idJuego', 'idCategoria');

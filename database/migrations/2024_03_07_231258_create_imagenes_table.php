@@ -10,11 +10,10 @@ return new class extends Migration
     {
         Schema::create('imagenes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idJuego'); // Asegura que este nombre de columna coincida con la clave primaria de 'juegos'.
+            $table->unsignedBigInteger('idJuego');
             $table->string('ruta_imagen');
             $table->timestamps();
 
-            // Establece la relación de clave foránea.
             $table->foreign('idJuego')->references('idJuego')->on('juegos')->onDelete('cascade');
         });
     }

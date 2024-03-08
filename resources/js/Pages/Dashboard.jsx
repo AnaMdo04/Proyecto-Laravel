@@ -18,7 +18,7 @@ export default function Dashboard({ auth }) {
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             ¡Has iniciado sesión!
                             <div className="mt-4">
-                                {/* Asegúrate de que el nombre de la ruta sea correcto. */}
+                                {}
                                 <Link
                                     href={route("index")}
                                     className="text-blue-500 hover:text-blue-700"

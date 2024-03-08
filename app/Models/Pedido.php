@@ -3,12 +3,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // Añade esta línea
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model
 {
-    use HasFactory; // Usa el trait HasFactory
+    use HasFactory;
 
     protected $table = 'pedidos';
     protected $primaryKey = 'idPedido';

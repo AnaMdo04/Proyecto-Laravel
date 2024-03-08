@@ -3,12 +3,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // Añade esta línea
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Puntuacion extends Model
 {
-    use HasFactory; // Usa el trait HasFactory
+    use HasFactory;
 
     protected $table = 'puntuaciones';
     protected $primaryKey = 'idPuntuacion';

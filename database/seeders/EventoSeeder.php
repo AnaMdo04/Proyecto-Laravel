@@ -13,8 +13,6 @@ class EventoSeeder extends Seeder
     }
 }
 
-// Agrega esto en EventoSeeder después de crear los eventos
-
 \App\Models\Evento::all()->each(function ($evento) {
     $juegos = \App\Models\Juego::inRandomOrder()->take(rand(1, 5))->pluck('id');
     $evento->juegos()->attach($juegos);

@@ -8,7 +8,7 @@
         <p><strong>Precio:</strong> ${{ number_format($juego->precio, 2) }}</p>
         <p><strong>Edad Mínima:</strong> {{ $juego->edad_minima }} años</p>
         <p><strong>Stock:</strong> {{ $juego->stock }} unidades</p>
-        @if ($juego->fabricante) <!-- Asegúrate de que estás cargando la relación 'fabricante' en el controlador -->
+        @if ($juego->fabricante)
         <p><strong>Fabricante:</strong> {{ $juego->fabricante->nombre }}</p>
         <p><strong>País del Fabricante:</strong> {{ $juego->fabricante->pais }}</p>
         @foreach($juego->imagenes as $imagen)

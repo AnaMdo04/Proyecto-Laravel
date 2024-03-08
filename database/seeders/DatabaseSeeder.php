@@ -14,13 +14,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             FabricanteSeeder::class,
-            CategoriaSeeder::class, // Asegúrate de agregar este si no lo habías hecho antes
+            CategoriaSeeder::class,
             JuegoSeeder::class,
             EventoSeeder::class,
             PedidoSeeder::class,
             ComentarioSeeder::class,
             PuntuacionSeeder::class,
-            ImagenesTableSeeder::class, // Asegúrate de tener este seeder definido si estás trabajando con pedidos
+            ImagenesTableSeeder::class,
         ]);
     }
 }

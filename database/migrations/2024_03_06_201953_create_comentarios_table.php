@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('fecha');
             $table->string('titulo');
             $table->unsignedBigInteger('id');
-            $table->unsignedBigInteger('idJuego'); // Asegúrate de que esta línea esté presente
+            $table->unsignedBigInteger('idJuego');
             $table->timestamps();
 
             $table->foreign('id')->references('id')->on('users')->onDelete('cascade');

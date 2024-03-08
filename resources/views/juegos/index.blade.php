@@ -38,6 +38,6 @@
             </tbody>
         </table>
     </div>
-    {{ $juegos->links() }} <!-- Paginación -->
+    {{ $juegos->links() }}
 </div>
 @endsection

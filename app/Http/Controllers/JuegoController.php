@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Juego;
-use App\Models\Fabricante; // Asegúrate de usar el modelo correcto para Juego
-use App\Models\Comentario; // Asegúrate de usar el modelo correcto para Comentario
-use App\Models\Puntuacion; // Asegúrate de usar el modelo correcto para Comentario
+use App\Models\Fabricante;
+use App\Models\Comentario;
+use App\Models\Puntuacion;
 
 
 class JuegoController extends Controller
@@ -15,7 +15,7 @@ class JuegoController extends Controller
     public function index()
     {
         $juegos = Juego::paginate(10);
-        return view('juegos.index', compact('juegos')); // Cambia 'juegos.index' a 'index'
+        return view('juegos.index', compact('juegos'));
     }
 
 
@@ -46,7 +46,6 @@ class JuegoController extends Controller
             foreach ($request->file('imagenes') as $imagen) {
                 $rutaImagen = $imagen->store('imagenes', 'public');
 
-                // Suponiendo que tu modelo Juego tiene una relación imagenes() para esto
                 $juego->imagenes()->create([
                     'ruta_imagen' => $rutaImagen,
                 ]);
