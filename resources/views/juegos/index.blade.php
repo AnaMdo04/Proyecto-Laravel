@@ -38,6 +38,9 @@
             </tbody>
         </table>
     </div>
-    {{ $juegos->links() }}
+    <div class="d-flex justify-content-center">
+        {{ $juegos->links('pagination::bootstrap-4') }}
+    </div>
+
 </div>
 @endsection

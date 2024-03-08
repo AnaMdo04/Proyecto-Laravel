@@ -23,7 +23,7 @@ export default function Dashboard({ auth }) {
                                     href={route("index")}
                                     className="text-blue-500 hover:text-blue-700"
                                 >
-                                    Ir a Index
+                                    Ver productos
                                 </Link>
                             </div>
                         </div>
