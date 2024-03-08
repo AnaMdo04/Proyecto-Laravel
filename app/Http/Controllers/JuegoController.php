@@ -9,25 +9,32 @@ use App\Models\Fabricante;
 use App\Models\Comentario;
 use App\Models\Puntuacion;
 
+// Define el controlador para los juegos.
 
 class JuegoController extends Controller
 {
+    // Muestra la lista de juegos con paginación.
+
     public function index()
     {
-        $juegos = Juego::paginate(10);
-        return view('juegos.index', compact('juegos'));
+        $juegos = Juego::paginate(10); // Pagina los juegos, 10 por página.
+        return view('juegos.index', compact('juegos')); // Retorna la vista con la lista de juegos.
     }
 
-
+    // Muestra el formulario para crear un nuevo juego.
 
     public function create()
     {
-        $fabricantes = Fabricante::all(); // Obtiene todos los fabricantes
-        return view('juegos.create', compact('fabricantes')); // Pasa los fabricantes a la vista
+        $fabricantes = Fabricante::all(); // Obtiene todos los fabricantes desde la base de datos.
+        return view('juegos.create', compact('fabricantes')); // Retorna la vista del formulario para crear un juego, pasando los fabricantes.
     }
+
+    // Guarda un nuevo juego en la base de datos.
 
     public function store(Request $request)
     {
+        // Valida los datos del formulario.
+
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
@@ -38,17 +45,16 @@ class JuegoController extends Controller
             'imagenes.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Crea el juego sin las imágenes primero
+        // Crea el juego en la base de datos.
+
         $juego = Juego::create($validatedData);
 
-        // Manejo de las imágenes
+        // Si hay imágenes, las procesa y las guarda.
+
         if ($request->hasFile('imagenes')) {
             foreach ($request->file('imagenes') as $imagen) {
                 $rutaImagen = $imagen->store('imagenes', 'public');
-
-                $juego->imagenes()->create([
-                    'ruta_imagen' => $rutaImagen,
-                ]);
+                $juego->imagenes()->create(['ruta_imagen' => $rutaImagen]);
             }
         }
 
@@ -56,22 +62,28 @@ class JuegoController extends Controller
     }
 
     // Muestra un juego específico.
+
     public function show($id)
     {
-        $juego = Juego::with('fabricante')->findOrFail($id);
-        return view('juegos.show', compact('juego'));
+        $juego = Juego::with('fabricante')->findOrFail($id); // Carga el juego y su fabricante asociado.
+        return view('juegos.show', compact('juego')); // Retorna la vista con los detalles del juego.
     }
 
     // Muestra el formulario para editar un juego existente.
+
     public function edit($id)
     {
-        $juego = Juego::findOrFail($id);
-        $fabricantes = Fabricante::all();
-        return view('juegos.edit', compact('juego', 'fabricantes'));
+        $juego = Juego::findOrFail($id); // Obtiene el juego a editar.
+        $fabricantes = Fabricante::all(); // Obtiene todos los fabricantes.
+        return view('juegos.edit', compact('juego', 'fabricantes')); // Retorna la vista del formulario para editar el juego.
     }
+
+    // Actualiza un juego en la base de datos.
 
     public function update(Request $request, $id)
     {
+        // Valida los datos del formulario.
+
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
@@ -82,43 +94,37 @@ class JuegoController extends Controller
             'imagenes.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $juego = Juego::findOrFail($id);
-        $juego->update($validatedData);
+        $juego = Juego::findOrFail($id); // Obtiene el juego a actualizar.
+        $juego->update($validatedData); // Actualiza el juego con los datos validados.
+
+        // Si hay imágenes nuevas, las procesa y las guarda.
 
         if ($request->hasFile('imagenes')) {
             foreach ($request->file('imagenes') as $imagen) {
                 $rutaImagen = $imagen->store('imagenes', 'public');
-
-                $juego->imagenes()->create([
-                    'ruta_imagen' => $rutaImagen,
-                ]);
+                $juego->imagenes()->create(['ruta_imagen' => $rutaImagen]);
             }
         }
 
         return redirect()->route('juegos.index')->with('success', 'Juego actualizado correctamente');
     }
 
+    // Elimina un juego y todas sus relaciones (puntuaciones) de la base de datos.
 
-
-    // Elimina un juego de la base de datos.
     public function destroy($id)
     {
-        $juego = Juego::findOrFail($id);
+        $juego = Juego::findOrFail($id); // Obtiene el juego a eliminar.
+        Puntuacion::where('idJuego', $id)->delete(); // Elimina las puntuaciones asociadas al juego.
+        $juego->delete(); // Elimina el juego.
 
-        // Elimina todas las puntuaciones relacionadas con el juego
-        Puntuacion::where('idJuego', $id)->delete();
-
-        // Ahora puedes eliminar el juego de forma segura
-        $juego->delete();
-
-        return redirect()->route('juegos.index');
+        return redirect()->route('juegos.index'); // Redirecciona al listado de juegos.
     }
 
+    // Carga y muestra los comentarios relacionados con un juego.
 
-    // Función adicional para cargar y mostrar comentarios relacionados con un juego.
     public function cargarComentarios($idJuego)
     {
-        $juego = Juego::with('comentarios')->findOrFail($idJuego); // Asegúrate de que Juego tiene una relación 'comentarios' definida en el modelo
-        return view('juegos.comentarios', compact('juego'));
+        $juego = Juego::with('comentarios')->findOrFail($idJuego); // Obtiene el juego y sus comentarios.
+        return view('juegos.comentarios', compact('juego')); // Retorna la vista con los comentarios del juego.
     }
 }

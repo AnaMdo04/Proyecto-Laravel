@@ -10,20 +10,33 @@ use App\Models\Comentario;
 
 class ComentarioSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     * Ejecuta los seeders de la base de datos.
+     */
+
     public function run()
     {
-        $user = User::all()->pluck('id');
-        $juegos = Juego::all()->pluck('idJuego');
+        // Obtén todos los IDs de usuarios y juegos disponibles
 
-        if ($user->isEmpty() || $juegos->isEmpty()) {
-            return; // No hay users o juegos, así que no se pueden crear comentarios.
+        $userIds = User::all()->pluck('id');
+        $juegoIds = Juego::all()->pluck('idJuego');
+
+        // Verifica si no hay usuarios o juegos disponibles
+
+        if ($userIds->isEmpty() || $juegoIds->isEmpty()) {
+            return; // No hay usuarios o juegos, por lo que no se pueden crear comentarios
         }
 
-        Comentario::factory(50)->make()->each(function ($comentario) use ($user, $juegos) {
-            // Asigna un iduser e idJuego aleatorio de los disponibles
-            $comentario->id = $user->random();
-            $comentario->idJuego = $juegos->random();
-            $comentario->save();
+        // Crea 50 comentarios ficticios utilizando el factory de Comentario
+
+        Comentario::factory(50)->make()->each(function ($comentario) use ($userIds, $juegoIds) {
+
+            // Asigna un ID de usuario y de juego aleatorio de los disponibles
+
+            $comentario->id = $userIds->random();
+            $comentario->idJuego = $juegoIds->random();
+            $comentario->save(); // Guarda el comentario en la base de datos
         });
     }
 }

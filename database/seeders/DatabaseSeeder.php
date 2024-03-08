@@ -3,14 +3,19 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\UserSeeder;
 use Illuminate\Database\Seeder;
-
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     * Ejecuta los seeders de la base de datos.
+     */
+
     public function run()
     {
+        // Llama a los otros seeders para poblar la base de datos con datos ficticios
+
         $this->call([
             UserSeeder::class,
             FabricanteSeeder::class,

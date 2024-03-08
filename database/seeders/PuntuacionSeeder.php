@@ -10,20 +10,33 @@ use App\Models\Puntuacion;
 
 class PuntuacionSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     * Ejecuta los seeders de la base de datos.
+     */
+
     public function run()
     {
-        $user = User::all()->pluck('id');
-        $juegos = Juego::all()->pluck('idJuego');
+        // Obtén todos los IDs de usuarios y juegos disponibles
 
-        if ($user->isEmpty() || $juegos->isEmpty()) {
-            return; // No hay users o juegos, así que no se pueden crear puntuaciones.
+        $userIds = User::pluck('id');
+        $juegoIds = Juego::pluck('idJuego');
+
+        // Verifica si no hay usuarios o juegos disponibles
+
+        if ($userIds->isEmpty() || $juegoIds->isEmpty()) {
+            return; // No hay usuarios o juegos, por lo que no se pueden crear puntuaciones
         }
 
-        Puntuacion::factory(50)->make()->each(function ($puntuacion) use ($user, $juegos) {
-            // Asigna un iduser e idJuego aleatorio de los disponibles
-            $puntuacion->id = $user->random();
-            $puntuacion->idJuego = $juegos->random();
-            $puntuacion->save();
+        // Crea 50 puntuaciones ficticias utilizando el factory de Puntuacion
+
+        Puntuacion::factory(50)->make()->each(function ($puntuacion) use ($userIds, $juegoIds) {
+
+            // Asigna un ID de usuario y un ID de juego aleatorio de los disponibles
+
+            $puntuacion->id = $userIds->random();
+            $puntuacion->idJuego = $juegoIds->random();
+            $puntuacion->save(); // Guarda la puntuación en la base de datos
         });
     }
 }
